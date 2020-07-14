@@ -7,24 +7,37 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="canvas"></div>
+    <canvas id="canvas"></canvas>
     <script>
-      canvas.onclick = (e) => {
-        //打出坐标 在console.log(e)里找出合适的参数
-        console.log(e.clientX);
-        console.log(e.clientY);
-        //console.log 调试大法
-        let div = document.createElement("div"); //让文档创建一个元素
-        div.style.position = "absolute"; //定位
-        div.style.left = e.clientX + "px";
-        div.style.top = e.clientY + "px";
-        div.style.width = "6px";
-        div.style.height = "6px";
-        div.style.marginLeft = "-3px";
-        div.style.marginTop = "-3px";
-        div.style.borderRadius = "50%";
-        div.style.backgroundColor = "black";
-        canvas.appendChild(div); //让div出现在canvas
+      //获取canvas
+      let canvas = document.getElementById("canvas");
+      //把canvas的高宽度设置为文档的高宽度
+      canvas.width = document.documentElement.clientWidth; //获取文档的高宽度而不是body的高宽度
+      canvas.height = document.documentElement.clientHeight;
+      //画线
+      let ctx = canvas.getContext("2d");
+      let painting = false; //监听鼠标用的指示参数
+
+      ctx.fillStyle = "black";
+      ctx.strokeStyle = "none";
+
+      canvas.onmousedown = () => {
+        painting = true;
+      }; //点击
+
+      canvas.onmousemove = (e) => {
+        if (painting === true) {
+          ctx.beginPath();
+          ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.fill();
+        } else {
+          console.log("什么都不做");
+        } //移动
+
+        canvas.onmouseup = () => {
+          painting = false;
+        }; //松开
       };
     </script>
   </body>
