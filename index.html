@@ -9,7 +9,7 @@
   <body>
     <canvas id="canvas"></canvas>
     <script>
-      //获取canvas
+      //获取canvas，不用var用let，var是老语法
       let canvas = document.getElementById("canvas");
       //把canvas的高宽度设置为文档的高宽度
       canvas.width = document.documentElement.clientWidth; //获取文档的高宽度而不是body的高宽度
@@ -25,6 +25,7 @@
         painting = true;
       }; //点击
 
+      //浏览器调用canvas.onmousemove，把事件相关信息包装成e
       canvas.onmousemove = (e) => {
         if (painting === true) {
           ctx.beginPath();
